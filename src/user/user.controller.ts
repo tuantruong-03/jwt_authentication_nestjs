@@ -1,21 +1,16 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserRequest } from './dto/create-user-request.dto';
-import { LoginUserRequest } from './dto/login-user-request.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { Request } from 'express';
 
 @Controller("user")
+@UseGuards(AuthGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('register')
-  @HttpCode(201)
-  async register(@Body() createUserRequest: CreateUserRequest) {
-    return this.userService.register(createUserRequest);
+  @Get('profile')
+  getProfile(@Req() req: any) {
+    return req.user;
   }
 
-  @Post('login')
-  @HttpCode(200)
-  async login(@Body() loginUserRequest: LoginUserRequest) {
-    return this.userService.login(loginUserRequest);
-  }
 }

@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
-import { UserController } from './user.controller';
-import { UserService } from './user.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './user.schema';
 import { JwtModule } from '@nestjs/jwt';
 import { config } from 'dotenv';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { User, UserSchema } from 'src/user/user.schema';
 import { SharedModule } from 'src/shared/shared.module';
 
 config()
 @Module({
     imports: [SharedModule],
-    controllers: [UserController],
-    providers: [UserService],
+    controllers: [AuthController],
+    providers: [AuthService],
     
 })
-export class UserModule {}
+export class AuthModule {}
